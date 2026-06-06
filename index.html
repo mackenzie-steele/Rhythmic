@@ -525,8 +525,8 @@
         p: { height:25, width:30, rim:30, neck:28, belly:42, base:25 } },
       { id: 'bowl',  name: 'Bowl',  mode: 'bowl',   params: ['height','width','belly','base'],
         p: { height:22, width:64, rim:64, neck:62, belly:42, base:28 } },
-      { id: 'plate', name: 'Plate', mode: 'plate',  params: ['height','width','base'],
-        sliderOverrides: { height: { min: 6 } },
+      { id: 'plate', name: 'Plate', mode: 'plate',  params: ['height','width'],
+        sliderOverrides: { height: { min: 6, max: 13 } },
         p: { height:7, width:90, rim:90, neck:88, belly:28, base:41 } },
       { id: 'vase',  name: 'Vase',  mode: 'vessel', params: ['height','width','rim','neck','belly','base'],
         p: { height:63, width:41, rim:23, neck:19, belly:42, base:19 } },
@@ -694,6 +694,7 @@
     function buildPlatePath({ H, maxR, baseR }) {
       const yBottom = BOTTOM, yTop = BOTTOM - H;
       const floorR  = maxR * 0.66;
+      const footR   = Math.min(baseR, floorR * 0.82);  // foot ring can never exceed floor
       const yWall   = yTop + H * 0.48;
 
       // Horizontal tangent at floor edge → vertical tangent at rim base
@@ -701,14 +702,14 @@
       const wcp2 = [CX + maxR,                              yWall + H * 0.09];
 
       return (
-        `M ${CX + baseR} ${yBottom} ` +
+        `M ${CX + footR} ${yBottom} ` +
         `L ${CX + floorR} ${yBottom} ` +
         `C ${wcp1[0]} ${wcp1[1]}, ${wcp2[0]} ${wcp2[1]}, ${CX + maxR} ${yWall} ` +
         `L ${CX + maxR} ${yTop} ` +
         `L ${mx(CX + maxR)} ${yTop} ` +
         `L ${mx(CX + maxR)} ${yWall} ` +
         `C ${mx(wcp2[0])} ${wcp2[1]}, ${mx(wcp1[0])} ${wcp1[1]}, ${mx(CX + floorR)} ${yBottom} ` +
-        `L ${mx(CX + baseR)} ${yBottom} Z`
+        `L ${mx(CX + footR)} ${yBottom} Z`
       );
     }
 
