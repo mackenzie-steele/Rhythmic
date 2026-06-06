@@ -39,6 +39,25 @@
       font-weight: 500;
       letter-spacing: 0.22em;
       text-transform: uppercase;
+      display: flex;
+      align-items: baseline;
+      gap: 0;
+    }
+
+    header h1 .breadcrumb {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.14s;
+    }
+
+    header h1 .breadcrumb:hover {
+      color: var(--ink);
+    }
+
+    header h1 .sep {
+      color: var(--rule);
+      margin: 0 8px;
+      font-weight: 300;
     }
 
     header .ref {
@@ -414,7 +433,7 @@
 <body>
 
   <header>
-    <h1>Vessel Form Generator</h1>
+    <h1><a class="breadcrumb" href="../">Rhythmic</a><span class="sep">/</span>Vessel Form Generator</h1>
     <span class="ref">RHYTHMIC-001</span>
   </header>
 
