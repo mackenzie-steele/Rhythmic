@@ -470,7 +470,8 @@
 
     /* ---- Ruler ticks ---- */
     .slider-wrap { position: relative; }
-    .tick-row { position: absolute; inset: 0; pointer-events: none; }
+    .slider-wrap input[type=range] { position: relative; z-index: 1; }
+    .tick-row { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
     .tick { position: absolute; bottom: 5px; width: 1px; transform: translateX(-50%); }
     .tick.major { height: 10px; background: rgba(138,132,122,0.5); }
     .tick.minor { height: 5px; background: rgba(180,174,166,0.45); }
@@ -975,11 +976,11 @@
       const wrap = document.createElement('div');
       wrap.className = 'slider-wrap';
       sl.parentNode.insertBefore(wrap, sl);
-      wrap.appendChild(sl);
       const row = document.createElement('div');
       row.className = 'tick-row';
       row.id = 'ticks-' + p;
       wrap.appendChild(row);
+      wrap.appendChild(sl);
     });
 
     function buildTicks() {
