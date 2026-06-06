@@ -465,12 +465,13 @@
         min-height: 0;
       }
       .stage {
-        flex: 0 0 45%;
+        flex: 0 0 40%;
+        overflow: hidden;
         border-right: none;
         border-bottom: 1px solid var(--ink);
         padding: 16px 24px;
       }
-      .panel { flex: 1; overflow-y: auto; min-height: 0; padding: 24px; }
+      .panel { flex: 1; overflow-y: auto; min-height: 0; padding: 24px; -webkit-overflow-scrolling: touch; }
       header, footer { padding: 20px 24px; flex-shrink: 0; }
 
       /* Larger tap target for sliders */
