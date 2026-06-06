@@ -63,7 +63,6 @@
       justify-content: center;
       padding: 64px;
       border-right: 1px solid var(--ink);
-      overflow: hidden;
     }
 
     /* ---- Measurements overlay (lower-right of stage) ---- */
@@ -105,10 +104,8 @@
     }
 
     .stage svg {
-      width: 100%;
-      max-width: 340px;
-      height: auto;
       display: block;
+      /* width/height set by sizeSVG() in JS */
     }
 
     .panel {
@@ -404,13 +401,11 @@
         min-height: 0;
       }
       .stage {
-        flex: 0 0 52%;
+        flex: 0 0 60%;
         border-right: none;
         border-bottom: 1px solid var(--ink);
         padding: 24px;
-        overflow: hidden;
       }
-      .stage svg { width: 100%; height: auto; max-width: 52%; }
       .panel { flex: 1; overflow-y: auto; min-height: 0; padding: 24px; }
       header, footer { padding: 20px 24px; flex-shrink: 0; }
     }
@@ -490,7 +485,6 @@
   </div>
 
   <footer>
-    <span>Adjust sliders to shape the vessel</span>
     <span id="footer-clay">—</span>
   </footer>
 
@@ -808,6 +802,9 @@
       const vbW     = outerR * 2  + vbPad * 2;
       const vbH     = H           + vbPad * 2;
       $('svg').setAttribute('viewBox', `${vbLeft} ${vbTop} ${vbW} ${vbH}`);
+      $('svg')._vbW = vbW;
+      $('svg')._vbH = vbH;
+      sizeSVG();
 
       // Shrinkage overlay measurements
       const wetH = H * SCALE, wetW = maxR * 2 * SCALE;
@@ -920,6 +917,29 @@
         draw();
       });
     });
+
+    // ---- Size SVG to always fit stage without clipping ----
+    function sizeSVG() {
+      const svgEl   = $('svg');
+      if (!svgEl._vbW || !svgEl._vbH) return;
+      const stageEl = document.querySelector('.stage');
+      const mobile  = window.innerWidth <= 720;
+      const pad     = mobile ? 24 : 64;
+      const availW  = stageEl.clientWidth  - pad * 2;
+      const availH  = stageEl.clientHeight - pad * 2;
+      if (availW <= 0 || availH <= 0) return;
+      const aspect  = svgEl._vbW / svgEl._vbH;
+
+      // Desktop: cap width at 340px; mobile: 55% of available width
+      let w = mobile ? availW * 0.55 : Math.min(340, availW);
+      let h = w / aspect;
+      // If too tall, constrain by height instead
+      if (h > availH) { h = availH; w = h * aspect; }
+
+      svgEl.style.width  = Math.round(w) + 'px';
+      svgEl.style.height = Math.round(h) + 'px';
+    }
+    window.addEventListener('resize', sizeSVG);
 
     Object.values(sliders).forEach(s => s.addEventListener('input', draw));
     draw();
