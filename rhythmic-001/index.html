@@ -465,11 +465,6 @@
           <span class="meas-dims" id="m-wet">—</span>
         </div>
         <div class="meas-row">
-          <span class="meas-stage">Bone dry</span>
-          <span class="meas-dims" id="m-dry">—</span>
-          <span class="meas-pct" id="p-dry">—</span>
-        </div>
-        <div class="meas-row">
           <span class="meas-stage">Fired</span>
           <span class="meas-dims" id="m-fired">—</span>
           <span class="meas-pct" id="p-fired">—</span>
@@ -857,9 +852,7 @@
       const wetH = H * SCALE, wetW = maxR * 2 * SCALE;
 
       $('m-wet').textContent   = `${wetH.toFixed(1)}" h  ×  ${wetW.toFixed(1)}" w`;
-      $('m-dry').textContent   = `${(wetH*dF).toFixed(1)}" h  ×  ${(wetW*dF).toFixed(1)}" w`;
       $('m-fired').textContent = `${(wetH*dF*fF).toFixed(1)}" h  ×  ${(wetW*dF*fF).toFixed(1)}" w`;
-      $('p-dry').textContent   = `−${(selectedClay.dryShrink*100).toFixed(1)}%`;
       $('p-fired').textContent = `−${((1-dF*fF)*100).toFixed(1)}%`;
 
       // Form descriptor — named modes use their vessel name directly
