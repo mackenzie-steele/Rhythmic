@@ -553,19 +553,19 @@
       <div class="params-list">
         <div class="param" id="param-height">
           <div class="param-row"><span class="param-name">Height</span><input type="text" class="param-val" id="v-height" value="—"></div>
-          <input type="range" id="s-height" min="19.44" max="91.67" value="66">
+          <input type="range" id="s-height" min="19.444" max="91.667" value="66">
         </div>
         <div class="param" id="param-width">
           <div class="param-row"><span class="param-name">Width</span><input type="text" class="param-val" id="v-width" value="—"></div>
-          <input type="range" id="s-width" min="12.17" max="89.26" value="56">
+          <input type="range" id="s-width" min="12.170" max="89.255" value="56">
         </div>
         <div class="param" id="param-rim">
           <div class="param-row"><span class="param-name">Rim</span><input type="text" class="param-val" id="v-rim" value="—"></div>
-          <input type="range" id="s-rim" min="8.11" max="85.20" value="36">
+          <input type="range" id="s-rim" min="8.113" max="85.198" value="36">
         </div>
         <div class="param" id="param-neck">
           <div class="param-row"><span class="param-name">Neck</span><input type="text" class="param-val" id="v-neck" value="—"></div>
-          <input type="range" id="s-neck" min="8.11" max="77.09" value="26">
+          <input type="range" id="s-neck" min="8.113" max="77.084" value="26">
         </div>
         <div class="param" id="param-belly">
           <div class="param-row"><span class="param-name">Body</span><input type="text" class="param-val" id="v-belly" value="—"></div>
@@ -573,7 +573,7 @@
         </div>
         <div class="param" id="param-base">
           <div class="param-row"><span class="param-name">Foot</span><input type="text" class="param-val" id="v-base" value="—"></div>
-          <input type="range" id="s-base" min="4.06" max="48.69" value="20">
+          <input type="range" id="s-base" min="4.056" max="48.685" value="20">
         </div>
       </div>
 
@@ -628,13 +628,13 @@
     // params: which sliders are relevant and visible for this vessel type
     const VESSELS = [
       { id: 'cylinder', name: 'Cylinder', mode: 'mug', params: ['height','width','base'],
-        sliderOverrides: { height: { min: 16.67, max: 33.33 }, width: { min: 24.34, max: 40.57 }, base: { min: 16.23, max: 24.34 } },
+        sliderOverrides: { height: { min: 16.666, max: 33.334 }, width: { min: 24.342, max: 40.571 }, base: { min: 16.228, max: 24.343 } },
         p: { height:25, width:30, rim:30, neck:28, belly:42, base:24 } },
       { id: 'bowl',  name: 'Bowl',  mode: 'bowl',   params: ['height','width','belly','base'],
-        sliderOverrides: { height: { min: 11.11, max: 36.11 }, width: { min: 40.57, max: 89.26 }, base: { min: 16.23, max: 40.57 } },
+        sliderOverrides: { height: { min: 11.111, max: 36.112 }, width: { min: 40.570, max: 89.255 }, base: { min: 4.056, max: 56.799 } },
         p: { height:22, width:64, rim:64, neck:62, belly:42, base:28 } },
       { id: 'plate', name: 'Plate', mode: 'plate',  params: ['height','width'],
-        sliderOverrides: { height: { min: 8.33, max: 13.89 } },
+        sliderOverrides: { height: { min: 8.333, max: 13.889 } },
         p: { height:9, width:89, rim:90, neck:88, belly:28, base:41 } },
       { id: 'vase',  name: 'Vase',  mode: 'vessel', params: ['height','width','rim','neck','belly','base'],
         p: { height:63, width:41, rim:23, neck:19, belly:42, base:19 } },
@@ -653,12 +653,12 @@
     });
 
     const SLIDER_DEFAULTS = {
-      height: { min: 19.44, max: 91.67 },  // 3.5" – 16.5"
-      width:  { min: 12.17, max: 89.26 },  // 1.5" – 11.0"
-      rim:    { min: 8.11,  max: 85.20 },  // 1.0" – 10.5"
-      neck:   { min: 8.11,  max: 77.09 },  // 1.0" – 9.5"
-      belly:  { min: 22,    max: 68 },
-      base:   { min: 4.06,  max: 48.69 },  // 0.5" – 6.0"
+      height: { min: 19.444, max: 91.667 },  // 3.5" – 16.5"
+      width:  { min: 12.170, max: 89.255 },  // 1.5" – 11.0"
+      rim:    { min: 8.113,  max: 85.198 },  // 1.0" – 10.5"
+      neck:   { min: 8.113,  max: 77.084 },  // 1.0" – 9.5"
+      belly:  { min: 22,     max: 68 },
+      base:   { min: 4.056,  max: 48.685 },  // 0.5" – 6.0"
     };
 
     vGrid.addEventListener('change', e => {
@@ -676,7 +676,7 @@
         if (!sl || !SLIDER_DEFAULTS[p]) return;
         sl.min  = SLIDER_DEFAULTS[p].min;
         sl.max  = SLIDER_DEFAULTS[p].max;
-        sl.step = '0.5';
+        sl.step = INCH_PARAMS.has(p) ? 'any' : '0.5';
       });
       if (v.sliderOverrides) {
         Object.entries(v.sliderOverrides).forEach(([k, ov]) => {
@@ -1218,7 +1218,7 @@
     }
 
     Object.entries(sliders).forEach(([p, s]) => {
-      s.step = '0.5';
+      s.step = INCH_PARAMS.has(p) ? 'any' : '0.5';
       s.addEventListener('input', () => {
         if (INCH_PARAMS.has(p)) maybeSnap(p);
         draw();
