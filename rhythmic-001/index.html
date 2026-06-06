@@ -814,8 +814,8 @@
       const fF     = 1 - selectedClay.fireShrink;
       const shrink = dF * fF;
 
-      const fd = n => (n * MAX_R * 2 * SCALE * shrink).toFixed(1) + '"';
-      displays.height.value = (hN * 18 * shrink).toFixed(1) + '"';
+      const fd = n => (n * MAX_R * 2 * SCALE).toFixed(1) + '"';
+      displays.height.value = (hN * 18).toFixed(1) + '"';
       displays.width.value  = fd(wN);
       displays.rim.value    = fd(riN);
       displays.neck.value   = fd(neN);
@@ -851,10 +851,10 @@
       sizeSVG();
 
       // Shrinkage overlay measurements
-      const wetH = H * SCALE, wetW = maxR * 2 * SCALE;
+      const firedH = H * SCALE, firedW = maxR * 2 * SCALE;
 
-      $('m-wet').textContent   = `${wetH.toFixed(1)}" h  ×  ${wetW.toFixed(1)}" w`;
-      $('m-fired').textContent = `${(wetH*dF*fF).toFixed(1)}" h  ×  ${(wetW*dF*fF).toFixed(1)}" w`;
+      $('m-wet').textContent   = `${(firedH / shrink).toFixed(1)}" h  ×  ${(firedW / shrink).toFixed(1)}" w`;
+      $('m-fired').textContent = `${firedH.toFixed(1)}" h  ×  ${firedW.toFixed(1)}" w`;
       $('p-fired').textContent = `−${((1-dF*fF)*100).toFixed(1)}%`;
 
       // Form descriptor — named modes use their vessel name directly
@@ -941,10 +941,9 @@
     function firedToSlider(paramId, rawVal) {
       const v = parseFloat(rawVal);
       if (isNaN(v) || v <= 0) return null;
-      const shrink = (1 - selectedClay.dryShrink) * (1 - selectedClay.fireShrink);
-      if (paramId === 'height') return v / (18 * shrink) * 100;
-      if (paramId === 'belly')  return v;  // value IS the percentage
-      return v / (MAX_R * 2 * SCALE * shrink) * 100;
+      if (paramId === 'height') return v / 18 * 100;
+      if (paramId === 'belly')  return v;
+      return v / (MAX_R * 2 * SCALE) * 100;
     }
 
     Object.entries(displays).forEach(([id, inp]) => {
