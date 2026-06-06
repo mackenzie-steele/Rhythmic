@@ -427,6 +427,23 @@
       }
       .panel { flex: 1; overflow-y: auto; min-height: 0; padding: 24px; }
       header, footer { padding: 20px 24px; flex-shrink: 0; }
+
+      /* Larger tap target for sliders */
+      input[type=range] { height: 28px; }
+      input[type=range]::-webkit-slider-thumb {
+        width: 18px; height: 18px;
+        margin-top: -8.5px;
+      }
+      input[type=range]::-moz-range-thumb {
+        width: 18px; height: 18px;
+      }
+
+      /* Larger, darker param value readouts */
+      .param-val {
+        font-size: 13px;
+        color: var(--ink);
+        width: 60px;
+      }
     }
   </style>
 </head>
@@ -434,7 +451,6 @@
 
   <header>
     <h1><a class="breadcrumb" href="../">Rhythmic</a><span class="sep">/</span>Vessel Form Generator</h1>
-    <span class="ref">RHYTHMIC-001</span>
   </header>
 
   <div class="layout">
@@ -618,8 +634,11 @@
     const CLAYS = [
       { id: 'earthenware', name: 'Earthenware', sub: 'Cone 06–1',  temp: '1830–2100°F', dryShrink: 0.05, fireShrink: 0.03, color: '#C8845A', category: 'warm'    },
       { id: 'terracotta',  name: 'Terracotta',  sub: 'Cone 06–04', temp: '1830–1940°F', dryShrink: 0.05, fireShrink: 0.03, color: '#C05040', category: 'warm'    },
+      { id: 'sw45',        name: 'Stoneware',   sub: 'Cone 4–5',   temp: '2167–2232°F', dryShrink: 0.065,fireShrink: 0.045,color: '#C4AE88', category: 'mid'     },
       { id: 'sw6',         name: 'Stoneware',   sub: 'Cone 6',     temp: '2232°F',      dryShrink: 0.07, fireShrink: 0.05, color: '#C0B090', category: 'mid'     },
+      { id: 'speckled',    name: 'Speckled',    sub: 'Cone 6',     temp: '2232°F',      dryShrink: 0.07, fireShrink: 0.05, color: '#C8B898', category: 'mid'     },
       { id: 'sw10',        name: 'Stoneware',   sub: 'Cone 10',    temp: '2345°F',      dryShrink: 0.07, fireShrink: 0.06, color: '#B0A080', category: 'mid'     },
+      { id: 'iron',        name: 'Iron Stoneware', sub: 'Cone 6–10', temp: '2232–2345°F', dryShrink: 0.07, fireShrink: 0.06, color: '#6A5040', category: 'warm'  },
       { id: 'p6',          name: 'Porcelain',   sub: 'Cone 6',     temp: '2232°F',      dryShrink: 0.08, fireShrink: 0.06, color: '#ECE9E0', category: 'light'   },
       { id: 'p10',         name: 'Porcelain',   sub: 'Cone 10',    temp: '2345°F',      dryShrink: 0.09, fireShrink: 0.08, color: '#E8E4D8', category: 'light'   },
       { id: 'raku',        name: 'Raku',        sub: 'Cone 06',    temp: '~1830°F',     dryShrink: 0.04, fireShrink: 0.03, color: '#4E3E2E', category: 'special' },
@@ -786,12 +805,12 @@
     };
 
     function draw() {
-      const hN  = sliders.height.value / 100;
-      const wN  = sliders.width.value  / 100;
-      const bN  = sliders.belly.value  / 100;
-      const neN = sliders.neck.value   / 100;
-      const riN = sliders.rim.value    / 100;
-      const baN = sliders.base.value   / 100;
+      const hN    = sliders.height.value / 100;
+      const wN    = sliders.width.value  / 100;
+      const bN    = sliders.belly.value  / 100;
+      const neN   = sliders.neck.value   / 100;
+      const riN   = sliders.rim.value    / 100;
+      const baN   = sliders.base.value   / 100;
 
       // Compute shrinkage first so param readouts show fired dimensions
       const dF     = 1 - selectedClay.dryShrink;
@@ -820,6 +839,7 @@
       else                       d = buildVesselPath({ H, maxR, neckR, rimR, baseR, bN });
 
       $('pot').setAttribute('d', d);
+
 
       // Fit the SVG viewBox tightly around the vessel so flexbox centering is accurate
       const outerR  = (mode === 'vessel') ? Math.max(maxR, rimR) : maxR;

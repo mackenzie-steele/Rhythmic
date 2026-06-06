@@ -60,6 +60,24 @@
       margin-bottom: 32px;
     }
 
+    .about {
+      font-size: 12px;
+      line-height: 1.7;
+      color: var(--muted);
+      max-width: 480px;
+      margin-bottom: 48px;
+    }
+
+    .about a {
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .about a:hover {
+      border-bottom-color: var(--ink);
+    }
+
     .project-list {
       display: flex;
       flex-direction: column;
@@ -71,6 +89,8 @@
       align-items: baseline;
       gap: 0 10px;
       padding: 24px 0;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
       text-decoration: none;
       color: inherit;
       cursor: pointer;
@@ -149,12 +169,14 @@
   </header>
 
   <main>
-<div class="project-list">
+    <p class="about">A collection of experiments in building digital products — designed by voice, built by AI, grounded in a background in design and systems. Each project is an exploration: a practice of expanding skills and knowledge as a designer and creator, learning what becomes possible when vision, voice, and the right tools meet. Think of it as a digital journal. More at <a href="https://mackenzie-steele.com/" target="_blank" rel="noopener">mackenzie-steele.com</a>.</p>
+
+    <div class="project-list">
 
       <a class="project-row" href="./rhythmic-001/">
         <span class="project-num">001</span>
         <div class="project-body">
-          <span class="project-name">Vessel Form</span>
+          <span class="project-name">Vessel Form Generator</span>
           <span class="project-desc">Pottery design tool — clay bodies, shrinkage &amp; glaze</span>
         </div>
         <span class="project-arrow">→</span>
