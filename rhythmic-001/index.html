@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vessel Form — RHYTHMIC-001</title>
+  <link rel="stylesheet" href="https://use.typekit.net/qvu0ojy.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -45,26 +46,26 @@
     }
 
     header h1 .breadcrumb {
-      color: var(--muted);
+      color: var(--ink);
       text-decoration: none;
       transition: color 0.14s;
+      font-family: adobe-garamond-pro, serif;
+      font-weight: 400;
+      font-style: italic;
+      font-size: 33px;
+      text-transform: lowercase;
+      letter-spacing: -0.01em;
     }
 
     header h1 .breadcrumb:hover {
-      color: var(--ink);
-    }
-
-    header h1 .sep {
-      color: var(--rule);
-      margin: 0 8px;
-      font-weight: 300;
+      opacity: 0.7;
     }
 
     header .ref {
       font-size: 10px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--ink);
     }
 
     .layout {
@@ -450,7 +451,8 @@
 <body>
 
   <header>
-    <h1><a class="breadcrumb" href="../">Rhythmic</a><span class="sep">/</span>Vessel Form Generator</h1>
+    <h1><a class="breadcrumb" href="../">Rhythmic</a></h1>
+    <span class="ref">Vessel Form Generator</span>
   </header>
 
   <div class="layout">
